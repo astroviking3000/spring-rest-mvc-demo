@@ -7,8 +7,7 @@ orbs:
 workflows:
   main:
     jobs:
-      steps:
-        - maven/test
+      - maven/test
 
 #workflows:
 #  maven:
