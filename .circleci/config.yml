@@ -3,11 +3,11 @@ version: 2.1
 orbs:
   maven: circleci/maven@0.0.12
 
+jobs:
+  full_workflow:
+    - maven/test
+
 workflows:
   maven_test:
     jobs:
-      - maven/test: # checkout, build, test, and upload test results
-        steps:
-          - run:
-              name: Send to CodeCov
-              command: bash <(curl -s https://codecov.io/bash)
+      - full_workflow
