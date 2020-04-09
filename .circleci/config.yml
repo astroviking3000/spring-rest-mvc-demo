@@ -4,11 +4,9 @@ orbs:
   maven: circleci/maven@0.0.12
   codecov: codecov/codecov@1.0.5
 
-workflows:
+jobs:
   maven_test:
-    jobs:
-      - maven/test
-      - codecov/upload
+    - maven/test
 
 #workflows:
 #  maven:
