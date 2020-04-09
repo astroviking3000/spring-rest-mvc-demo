@@ -4,14 +4,10 @@ orbs:
   codecov: codecov/codecov@1.0.5
   maven: circleci/maven@0.0.12
 
-jobs:
-  upload:
-    steps:
-      - codecov/upload:
-        file: target/jacoco.exec
-
 workflows:
   maven_test:
     jobs:
-      - maven/test # checkout, build, test, and upload test results
-      - upload
+      - maven/test: # checkout, build, test, and upload test results
+        steps:
+          - codecov/upload:
+            file: target/jacoco.exec
