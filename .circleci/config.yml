@@ -6,7 +6,6 @@ orbs:
 
 jobs:
   upload:
-    executor: default
     steps:
       - codecov/upload:
         file: target/jacoco.exec
