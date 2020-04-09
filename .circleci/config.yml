@@ -8,7 +8,7 @@ jobs:
   build:
     executor: default
     steps:
-      - codecov/upload
+      - codecov/upload:
         file: target/jacoco.exec
 
 workflows:
