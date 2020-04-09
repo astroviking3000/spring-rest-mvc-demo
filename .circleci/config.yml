@@ -6,6 +6,7 @@ orbs:
 
 jobs:
   build:
+    executor: default
     steps:
       - codecov/upload
 
