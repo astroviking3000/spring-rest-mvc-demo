@@ -2,12 +2,9 @@ version: 2.1
 
 orbs:
   maven: circleci/maven@0.0.12
-
-jobs:
-  full_workflow:
-    - maven/test
+  codecov: codecov/codecov@1.0.5
 
 workflows:
   maven_test:
     jobs:
-      - full_workflow
+      - maven/test
