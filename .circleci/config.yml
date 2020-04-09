@@ -9,7 +9,7 @@ jobs:
     docker:
       - image: buildpack-deps:trusty
     steps:
-      codecov/upload
+      - codecov/upload
 
 workflows:
   maven_test:
