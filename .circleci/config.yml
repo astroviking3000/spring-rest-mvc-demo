@@ -5,9 +5,7 @@ orbs:
   codecov: codecov/codecov@1.0.5
 
 jobs:
-  maven_test:
-    steps:
-      - maven/test
+  - maven/test
 
 #workflows:
 #  maven:
