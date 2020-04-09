@@ -59,7 +59,7 @@ public class CustomerServiceImpl implements CustomerService {
   }
 
   @Override
-  public CustomerDTO patch(Long id, CustomerDTO customerDTO) {
+  public CustomerDTO patchCustomer(Long id, CustomerDTO customerDTO) {
     Customer customer = customerRepository.findById(id).orElseThrow(RuntimeException::new);
 
     if (customerDTO.getFirstName() != null) customer.setFirstName(customerDTO.getFirstName());
@@ -67,5 +67,10 @@ public class CustomerServiceImpl implements CustomerService {
     if (customerDTO.getLastName() != null) customer.setLastName(customerDTO.getLastName());
 
     return saveCustomer(customer);
+  }
+
+  @Override
+  public void deleteCustomer(Long id) {
+    customerRepository.deleteById(id);
   }
 }

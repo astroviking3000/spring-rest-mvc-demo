@@ -104,7 +104,7 @@ class CustomerControllerTest extends AbstractControllerTest {
   void testPatch() throws Exception {
     CustomerDTO beforeCustomer = new CustomerDTO(null, FIRST_NAME, LAST_NAME);
     CustomerDTO savedCustomer = new CustomerDTO(ID, FIRST_NAME, LAST_NAME);
-    when(customerService.patch(ID, beforeCustomer)).thenReturn(savedCustomer);
+    when(customerService.patchCustomer(ID, beforeCustomer)).thenReturn(savedCustomer);
 
     mockMvc
         .perform(
@@ -115,5 +115,10 @@ class CustomerControllerTest extends AbstractControllerTest {
         .andExpect(jsonPath("$.id", equalTo(1)))
         .andExpect(jsonPath("$.firstName", equalTo(FIRST_NAME)))
         .andExpect(jsonPath("$.lastName", equalTo(LAST_NAME)));
+  }
+
+  @Test
+  void testDelete() throws Exception {
+    mockMvc.perform(delete("/api/v1/customers/" + ID)).andExpect(status().isOk());
   }
 }

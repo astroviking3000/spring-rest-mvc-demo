@@ -43,7 +43,7 @@ public class CustomerServiceImplIT {
     CustomerDTO submittedCustomer = new CustomerDTO();
     submittedCustomer.setFirstName(NAME);
 
-    CustomerDTO patchedCustomer = customerService.patch(customerId, submittedCustomer);
+    CustomerDTO patchedCustomer = customerService.patchCustomer(customerId, submittedCustomer);
 
     assertEquals(originalCustomer.getId(), patchedCustomer.getId());
     assertEquals(NAME, patchedCustomer.getFirstName());
@@ -57,7 +57,7 @@ public class CustomerServiceImplIT {
     CustomerDTO submittedCustomer = new CustomerDTO();
     submittedCustomer.setLastName(NAME);
 
-    CustomerDTO patchedCustomer = customerService.patch(customerId, submittedCustomer);
+    CustomerDTO patchedCustomer = customerService.patchCustomer(customerId, submittedCustomer);
 
     assertEquals(originalCustomer.getId(), patchedCustomer.getId());
     assertEquals(originalCustomer.getFirstName(), patchedCustomer.getFirstName());

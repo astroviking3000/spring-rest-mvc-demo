@@ -16,7 +16,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 class CustomerServiceImplTest {
@@ -89,5 +89,11 @@ class CustomerServiceImplTest {
     assertEquals(ID, returnedCustomerDTO.getId());
     assertEquals(FIRST_NAME, returnedCustomerDTO.getFirstName());
     assertEquals(LAST_NAME, returnedCustomerDTO.getLastName());
+  }
+
+  @Test
+  void deleteCustomer() {
+    customerService.deleteCustomer(ID);
+    verify(customerRepository, times(1)).deleteById(ID);
   }
 }
