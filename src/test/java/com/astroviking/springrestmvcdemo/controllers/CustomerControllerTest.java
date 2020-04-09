@@ -99,4 +99,21 @@ class CustomerControllerTest extends AbstractControllerTest {
         .andExpect(jsonPath("$.firstName", equalTo(FIRST_NAME)))
         .andExpect(jsonPath("$.lastName", equalTo(LAST_NAME)));
   }
+
+  @Test
+  void testPatch() throws Exception {
+    CustomerDTO beforeCustomer = new CustomerDTO(null, FIRST_NAME, LAST_NAME);
+    CustomerDTO savedCustomer = new CustomerDTO(ID, FIRST_NAME, LAST_NAME);
+    when(customerService.patch(ID, beforeCustomer)).thenReturn(savedCustomer);
+
+    mockMvc
+        .perform(
+            patch("/api/v1/customers/" + ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(beforeCustomer)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id", equalTo(1)))
+        .andExpect(jsonPath("$.firstName", equalTo(FIRST_NAME)))
+        .andExpect(jsonPath("$.lastName", equalTo(LAST_NAME)));
+  }
 }
