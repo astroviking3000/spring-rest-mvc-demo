@@ -8,7 +8,7 @@ jobs:
   build:
     steps:
       - codecov/upload
-      -
+
 workflows:
   maven_test:
     jobs:
