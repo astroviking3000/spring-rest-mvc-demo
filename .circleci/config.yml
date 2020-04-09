@@ -5,7 +5,7 @@ orbs:
   maven: circleci/maven@0.0.12
 
 jobs:
-  build:
+  upload:
     executor: default
     steps:
       - codecov/upload:
@@ -15,3 +15,4 @@ workflows:
   maven_test:
     jobs:
       - maven/test # checkout, build, test, and upload test results
+      - upload
