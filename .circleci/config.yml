@@ -9,4 +9,8 @@ workflows:
     jobs:
       - maven/test # checkout, build, test, and upload test results
 
-#codecov
+jobs:
+  build:
+    steps:
+      - codecov/upload:
+          file: target/jacoco.exec
