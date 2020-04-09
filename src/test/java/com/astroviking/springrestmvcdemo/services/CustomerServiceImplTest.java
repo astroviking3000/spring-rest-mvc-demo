@@ -74,4 +74,20 @@ class CustomerServiceImplTest {
     assertEquals(FIRST_NAME, returnedCustomerDTO.getFirstName());
     assertEquals(LAST_NAME, returnedCustomerDTO.getLastName());
   }
+
+  @Test
+  void update() {
+    // given
+    CustomerDTO customerDTO = new CustomerDTO(null, FIRST_NAME, LAST_NAME);
+    Customer customer = new Customer(ID, FIRST_NAME, LAST_NAME);
+    when(customerRepository.save(any(Customer.class))).thenReturn(customer);
+
+    // when
+    CustomerDTO returnedCustomerDTO = customerService.update(ID, customerDTO);
+
+    // then
+    assertEquals(ID, returnedCustomerDTO.getId());
+    assertEquals(FIRST_NAME, returnedCustomerDTO.getFirstName());
+    assertEquals(LAST_NAME, returnedCustomerDTO.getLastName());
+  }
 }
