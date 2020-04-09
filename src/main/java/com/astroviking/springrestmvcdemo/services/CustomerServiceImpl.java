@@ -2,6 +2,7 @@ package com.astroviking.springrestmvcdemo.services;
 
 import com.astroviking.springrestmvcdemo.api.v1.mapper.CustomerMapper;
 import com.astroviking.springrestmvcdemo.api.v1.model.CustomerDTO;
+import com.astroviking.springrestmvcdemo.domain.Customer;
 import com.astroviking.springrestmvcdemo.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +33,16 @@ public class CustomerServiceImpl implements CustomerService {
         .findById(id)
         .map(customerMapper::customerToCustomerDTO)
         .orElseThrow(RuntimeException::new);
+  }
+
+  @Override
+  public CustomerDTO create(CustomerDTO customerDTO) {
+    Customer customer = customerMapper.customerDtoToCustomer(customerDTO);
+
+    Customer savedCustomer = customerRepository.save(customer);
+
+    CustomerDTO returnDTO = customerMapper.customerToCustomerDTO(savedCustomer);
+
+    return returnDTO;
   }
 }

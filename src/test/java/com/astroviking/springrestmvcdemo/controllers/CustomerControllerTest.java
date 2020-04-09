@@ -20,14 +20,16 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-class CustomerControllerTest {
+class CustomerControllerTest extends AbstractControllerTest {
 
   public static final long ID = 1L;
   public static final String FIRST_NAME = "Jim";
+  public static final String LAST_NAME = "Blue";
   @Mock CustomerService customerService;
 
   @InjectMocks CustomerController customerController;
@@ -55,7 +57,7 @@ class CustomerControllerTest {
 
   @Test
   void getById() throws Exception {
-    CustomerDTO customer1 = new CustomerDTO(ID, FIRST_NAME, "Blue");
+    CustomerDTO customer1 = new CustomerDTO(ID, FIRST_NAME, LAST_NAME);
 
     when(customerService.getById(anyLong())).thenReturn(customer1);
 
@@ -63,5 +65,22 @@ class CustomerControllerTest {
         .perform(get("/api/v1/customers/" + ID).contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.firstName", equalTo(FIRST_NAME)));
+  }
+
+  @Test
+  void create() throws Exception {
+    CustomerDTO beforeCustomer = new CustomerDTO(null, FIRST_NAME, LAST_NAME);
+    CustomerDTO savedCustomer = new CustomerDTO(ID, FIRST_NAME, LAST_NAME);
+    when(customerService.create(beforeCustomer)).thenReturn(savedCustomer);
+
+    mockMvc
+        .perform(
+            post("/api/v1/customers")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(beforeCustomer)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id", equalTo(1)))
+        .andExpect(jsonPath("$.firstName", equalTo(FIRST_NAME)))
+        .andExpect(jsonPath("$.lastName", equalTo(LAST_NAME)));
   }
 }
