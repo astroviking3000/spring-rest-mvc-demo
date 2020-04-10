@@ -2,6 +2,7 @@ package com.astroviking.springrestmvcdemo.services;
 
 import com.astroviking.springrestmvcdemo.api.v1.mapper.CategoryMapper;
 import com.astroviking.springrestmvcdemo.api.v1.model.CategoryDTO;
+import com.astroviking.springrestmvcdemo.api.v1.model.CategoryListDTO;
 import com.astroviking.springrestmvcdemo.domain.Category;
 import com.astroviking.springrestmvcdemo.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,12 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
-  public List<CategoryDTO> getAllCategories() {
-    return categoryRepository.findAll().stream()
-        .map(categoryMapper::categoryToCategoryDTO)
-        .collect(Collectors.toList());
+  public CategoryListDTO getAllCategories() {
+    List<CategoryDTO> categoryDTOS =
+        categoryRepository.findAll().stream()
+            .map(categoryMapper::categoryToCategoryDTO)
+            .collect(Collectors.toList());
+    return new CategoryListDTO(categoryDTOS);
   }
 
   @Override

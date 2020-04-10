@@ -1,6 +1,7 @@
 package com.astroviking.springrestmvcdemo.controllers;
 
 import com.astroviking.springrestmvcdemo.api.v1.model.CategoryDTO;
+import com.astroviking.springrestmvcdemo.api.v1.model.CategoryListDTO;
 import com.astroviking.springrestmvcdemo.services.CategoryService;
 import com.astroviking.springrestmvcdemo.services.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,8 +55,9 @@ class CategoryControllerTest {
     category1.setName("Bob");
 
     List<CategoryDTO> categoryDTOList = Arrays.asList(category1, category2);
+    CategoryListDTO categoryListDTO = new CategoryListDTO(categoryDTOList);
 
-    when(categoryService.getAllCategories()).thenReturn(categoryDTOList);
+    when(categoryService.getAllCategories()).thenReturn(categoryListDTO);
 
     mockMvc
         .perform(get(CategoryController.BASE_URL).contentType(MediaType.APPLICATION_JSON))

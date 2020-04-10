@@ -1,12 +1,11 @@
 package com.astroviking.springrestmvcdemo.services;
 
 import com.astroviking.springrestmvcdemo.api.v1.model.CategoryDTO;
-
-import java.util.List;
+import com.astroviking.springrestmvcdemo.api.v1.model.CategoryListDTO;
 
 public interface CategoryService {
 
-  List<CategoryDTO> getAllCategories();
+  CategoryListDTO getAllCategories();
 
   CategoryDTO getCategoryByName(String name);
 }

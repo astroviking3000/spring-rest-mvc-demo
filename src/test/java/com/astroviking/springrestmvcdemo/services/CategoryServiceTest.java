@@ -2,19 +2,19 @@ package com.astroviking.springrestmvcdemo.services;
 
 import com.astroviking.springrestmvcdemo.api.v1.mapper.CategoryMapper;
 import com.astroviking.springrestmvcdemo.api.v1.model.CategoryDTO;
+import com.astroviking.springrestmvcdemo.api.v1.model.CategoryListDTO;
 import com.astroviking.springrestmvcdemo.domain.Category;
 import com.astroviking.springrestmvcdemo.repositories.CategoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -26,8 +26,7 @@ class CategoryServiceTest {
 
   CategoryService categoryService;
 
-  @Mock
-  CategoryRepository categoryRepository;
+  @Mock CategoryRepository categoryRepository;
 
   @BeforeEach
   void setUp() {
@@ -41,10 +40,11 @@ class CategoryServiceTest {
     when(categoryRepository.findAll()).thenReturn(categories);
 
     // when
-    List<CategoryDTO> categoryDTOS = categoryService.getAllCategories();
+    CategoryListDTO categoryListDTO = categoryService.getAllCategories();
 
-    //then
-    assertEquals(3, categoryDTOS.size());
+    // then
+    Integer size = categoryListDTO.getCategories().size();
+    assertEquals(3, size);
   }
 
   @Test
