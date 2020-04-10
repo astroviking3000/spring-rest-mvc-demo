@@ -3,15 +3,14 @@ package com.astroviking.springrestmvcdemo.controllers;
 import com.astroviking.springrestmvcdemo.api.v1.model.VendorDTO;
 import com.astroviking.springrestmvcdemo.api.v1.model.VendorListDTO;
 import com.astroviking.springrestmvcdemo.services.VendorService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,23 +24,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
+@WebMvcTest(controllers = {VendorController.class})
 class VendorControllerTest extends AbstractControllerTest {
 
   public static final String NAME = "Some vendor";
   public static final long ID = 1L;
-  @Mock VendorService vendorService;
 
-  @InjectMocks VendorController vendorController;
+  @MockBean VendorService vendorService;
 
-  MockMvc mockMvc;
-
-  @BeforeEach
-  void setUp() {
-    mockMvc =
-        MockMvcBuilders.standaloneSetup(vendorController)
-            .setControllerAdvice(RestResponseEntityExceptionHandler.class)
-            .build();
-  }
+  @Autowired MockMvc mockMvc;
 
   @Test
   void getAllVendors() throws Exception {
