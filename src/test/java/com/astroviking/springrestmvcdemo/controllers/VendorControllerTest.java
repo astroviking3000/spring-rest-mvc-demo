@@ -18,6 +18,7 @@ import java.util.List;
 import static com.astroviking.springrestmvcdemo.controllers.VendorController.BASE_URL;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -38,7 +39,7 @@ class VendorControllerTest extends AbstractControllerTest {
   void getAllVendors() throws Exception {
     List<VendorDTO> vendorDTOS = Arrays.asList(new VendorDTO(), new VendorDTO());
     VendorListDTO vendorListDTO = new VendorListDTO(vendorDTOS);
-    when(vendorService.getAllVendors()).thenReturn(vendorListDTO);
+    given(vendorService.getAllVendors()).willReturn(vendorListDTO);
 
     mockMvc
         .perform(get(BASE_URL))
@@ -51,7 +52,7 @@ class VendorControllerTest extends AbstractControllerTest {
   void createVendor() throws Exception {
     VendorDTO unsavedDTO = new VendorDTO(null, NAME);
     VendorDTO savedDTO = new VendorDTO(ID, NAME);
-    when(vendorService.create(unsavedDTO)).thenReturn(savedDTO);
+    given(vendorService.create(unsavedDTO)).willReturn(savedDTO);
 
     mockMvc
         .perform(
@@ -71,7 +72,7 @@ class VendorControllerTest extends AbstractControllerTest {
   @Test
   void getVendorById() throws Exception {
     VendorDTO vendorDTO = new VendorDTO(ID, NAME);
-    when(vendorService.getById(ID)).thenReturn(vendorDTO);
+    given(vendorService.getById(ID)).willReturn(vendorDTO);
 
     mockMvc
         .perform(get(BASE_URL + "/" + ID))
@@ -84,7 +85,7 @@ class VendorControllerTest extends AbstractControllerTest {
   void patchVendor() throws Exception {
     VendorDTO vendorDTO = new VendorDTO(null, NAME);
     VendorDTO patchedDTO = new VendorDTO(ID, NAME);
-    when(vendorService.patchVendor(ID, vendorDTO)).thenReturn(patchedDTO);
+    given(vendorService.patchVendor(ID, vendorDTO)).willReturn(patchedDTO);
 
     mockMvc
         .perform(
@@ -100,7 +101,7 @@ class VendorControllerTest extends AbstractControllerTest {
   void updateVendor() throws Exception {
     VendorDTO vendorDTO = new VendorDTO(null, NAME);
     VendorDTO patchedDTO = new VendorDTO(ID, NAME);
-    when(vendorService.updateVendor(anyLong(), any(VendorDTO.class))).thenReturn(patchedDTO);
+    given(vendorService.updateVendor(anyLong(), any(VendorDTO.class))).willReturn(patchedDTO);
 
     mockMvc
         .perform(
