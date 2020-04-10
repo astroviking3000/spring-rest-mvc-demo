@@ -49,7 +49,7 @@ class CustomerControllerTest extends AbstractControllerTest {
     when(customerService.getAllCustomers()).thenReturn(customerList);
 
     mockMvc
-        .perform(get("/api/v1/customers").contentType(MediaType.APPLICATION_JSON))
+        .perform(get(CustomerController.BASE_URL).contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.customers", hasSize(2)));
   }
@@ -61,7 +61,8 @@ class CustomerControllerTest extends AbstractControllerTest {
     when(customerService.getById(anyLong())).thenReturn(customer1);
 
     mockMvc
-        .perform(get("/api/v1/customers/" + ID).contentType(MediaType.APPLICATION_JSON))
+        .perform(
+            get(CustomerController.BASE_URL + "/" + ID).contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.firstName", equalTo(FIRST_NAME)));
   }
@@ -74,7 +75,7 @@ class CustomerControllerTest extends AbstractControllerTest {
 
     mockMvc
         .perform(
-            post("/api/v1/customers")
+            post(CustomerController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(beforeCustomer)))
         .andExpect(status().isOk())
@@ -91,7 +92,7 @@ class CustomerControllerTest extends AbstractControllerTest {
 
     mockMvc
         .perform(
-            put("/api/v1/customers/" + ID)
+            put(CustomerController.BASE_URL + "/" + ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(beforeCustomer)))
         .andExpect(status().isOk())
@@ -108,7 +109,7 @@ class CustomerControllerTest extends AbstractControllerTest {
 
     mockMvc
         .perform(
-            patch("/api/v1/customers/" + ID)
+            patch(CustomerController.BASE_URL + "/" + ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(beforeCustomer)))
         .andExpect(status().isOk())
@@ -119,6 +120,6 @@ class CustomerControllerTest extends AbstractControllerTest {
 
   @Test
   void testDelete() throws Exception {
-    mockMvc.perform(delete("/api/v1/customers/" + ID)).andExpect(status().isOk());
+    mockMvc.perform(delete(CustomerController.BASE_URL + "/" + ID)).andExpect(status().isOk());
   }
 }
