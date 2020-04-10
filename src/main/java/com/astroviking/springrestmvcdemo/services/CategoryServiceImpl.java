@@ -2,6 +2,7 @@ package com.astroviking.springrestmvcdemo.services;
 
 import com.astroviking.springrestmvcdemo.api.v1.mapper.CategoryMapper;
 import com.astroviking.springrestmvcdemo.api.v1.model.CategoryDTO;
+import com.astroviking.springrestmvcdemo.domain.Category;
 import com.astroviking.springrestmvcdemo.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,8 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   public CategoryDTO getCategoryByName(String name) {
-    return categoryMapper.categoryToCategoryDTO(categoryRepository.findByName(name));
+    Category category = categoryRepository.findByName(name);
+    if (category == null) throw new ResourceNotFoundException();
+    return categoryMapper.categoryToCategoryDTO(category);
   }
 }

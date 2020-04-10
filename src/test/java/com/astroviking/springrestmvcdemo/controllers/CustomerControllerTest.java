@@ -37,7 +37,10 @@ class CustomerControllerTest extends AbstractControllerTest {
 
   @BeforeEach
   void setUp() {
-    mockMvc = MockMvcBuilders.standaloneSetup(customerController).build();
+    mockMvc =
+        MockMvcBuilders.standaloneSetup(customerController)
+            .setControllerAdvice(RestResponseEntityExceptionHandler.class)
+            .build();
   }
 
   @Test

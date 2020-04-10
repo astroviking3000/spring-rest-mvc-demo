@@ -2,6 +2,7 @@ package com.astroviking.springrestmvcdemo.controllers;
 
 import com.astroviking.springrestmvcdemo.api.v1.model.CategoryDTO;
 import com.astroviking.springrestmvcdemo.services.CategoryService;
+import com.astroviking.springrestmvcdemo.services.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,7 +37,10 @@ class CategoryControllerTest {
 
   @BeforeEach
   void setUp() {
-    mockMvc = MockMvcBuilders.standaloneSetup(categoryController).build();
+    mockMvc =
+        MockMvcBuilders.standaloneSetup(categoryController)
+            .setControllerAdvice(RestResponseEntityExceptionHandler.class)
+            .build();
   }
 
   @Test
@@ -72,5 +76,12 @@ class CategoryControllerTest {
             get(CategoryController.BASE_URL + "/" + NAME).contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.name", equalTo(NAME)));
+  }
+
+  @Test
+  public void testNameNotFound() throws Exception {
+    when(categoryService.getCategoryByName(anyString())).thenThrow(ResourceNotFoundException.class);
+
+    mockMvc.perform(get(CategoryController.BASE_URL + "/" + NAME)).andExpect(status().isNotFound());
   }
 }
