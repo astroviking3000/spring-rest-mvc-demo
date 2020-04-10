@@ -2,8 +2,10 @@ package com.astroviking.springrestmvcdemo.bootstrap;
 
 import com.astroviking.springrestmvcdemo.domain.Category;
 import com.astroviking.springrestmvcdemo.domain.Customer;
+import com.astroviking.springrestmvcdemo.domain.Vendor;
 import com.astroviking.springrestmvcdemo.repositories.CategoryRepository;
 import com.astroviking.springrestmvcdemo.repositories.CustomerRepository;
+import com.astroviking.springrestmvcdemo.repositories.VendorRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -12,16 +14,22 @@ public class Bootstrap implements CommandLineRunner {
 
   CategoryRepository categoryRepository;
   CustomerRepository customerRepository;
+  VendorRepository vendorRepository;
 
-  public Bootstrap(CategoryRepository categoryRepository, CustomerRepository customerRepository) {
+  public Bootstrap(
+      CategoryRepository categoryRepository,
+      CustomerRepository customerRepository,
+      VendorRepository vendorRepository) {
     this.categoryRepository = categoryRepository;
     this.customerRepository = customerRepository;
+    this.vendorRepository = vendorRepository;
   }
 
   @Override
   public void run(String... args) {
     loadCategories();
     loadCustomers();
+    loadVendors();
   }
 
   private void loadCustomers() {
@@ -63,5 +71,17 @@ public class Bootstrap implements CommandLineRunner {
     categoryRepository.save(nuts);
 
     System.out.println("Fruit Loaded = " + categoryRepository.count());
+  }
+
+  private void loadVendors() {
+    Vendor vendor1 = new Vendor(1L, "Pete's Pears");
+    Vendor vendor2 = new Vendor(2L, "Adam's Apples");
+    Vendor vendor3 = new Vendor(3L, "Fruits-R-Us");
+
+    vendorRepository.save(vendor1);
+    vendorRepository.save(vendor2);
+    vendorRepository.save(vendor3);
+
+    System.out.println("Vendors loaded = " + vendorRepository.count());
   }
 }
