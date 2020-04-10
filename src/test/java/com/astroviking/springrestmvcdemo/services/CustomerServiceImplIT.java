@@ -6,6 +6,7 @@ import com.astroviking.springrestmvcdemo.bootstrap.Bootstrap;
 import com.astroviking.springrestmvcdemo.domain.Customer;
 import com.astroviking.springrestmvcdemo.repositories.CategoryRepository;
 import com.astroviking.springrestmvcdemo.repositories.CustomerRepository;
+import com.astroviking.springrestmvcdemo.repositories.VendorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,11 +27,13 @@ public class CustomerServiceImplIT {
 
   @Autowired CustomerRepository customerRepository;
 
+  @Autowired VendorRepository vendorRepository;
+
   CustomerService customerService;
 
   @BeforeEach
   void setUp() {
-    Bootstrap bootstrap = new Bootstrap(categoryRepository, customerRepository);
+    Bootstrap bootstrap = new Bootstrap(categoryRepository, customerRepository, vendorRepository);
     bootstrap.run();
 
     customerService = new CustomerServiceImpl(customerRepository, CustomerMapper.INSTANCE);
