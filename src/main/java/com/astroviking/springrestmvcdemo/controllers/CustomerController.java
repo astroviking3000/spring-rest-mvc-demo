@@ -3,6 +3,7 @@ package com.astroviking.springrestmvcdemo.controllers;
 import com.astroviking.springrestmvcdemo.api.v1.model.CustomerDTO;
 import com.astroviking.springrestmvcdemo.api.v1.model.CustomerListDTO;
 import com.astroviking.springrestmvcdemo.services.CustomerService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;;
 
@@ -17,6 +18,7 @@ public class CustomerController {
     this.customerService = customerService;
   }
 
+  @ApiOperation(value = "This will return a list of all Customers")
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
   public CustomerListDTO getAllCustomers() {
